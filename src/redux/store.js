@@ -1,10 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import card from "./reducers/card";
+import cart from "./reducers/cart";
+import { saveState } from "../config/store";
 
+export const store = configureStore({
+  reducer: {
+    cart,
+  },
+});
 
-
-export const store = configureStore ({
-    reducer:{
-        card,
-    },
+store.subscribe(() => {
+  saveState("products", store.getState().cart);
 });
