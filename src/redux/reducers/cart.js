@@ -4,12 +4,22 @@ import { loadState } from "../../config/store";
 const initialState = loadState("products") || {
   products: [],
   count: 0,
+  totalPrice: 0,
 };
 
 const cartReducer = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    setProductCount: (state) => {
+
+    },
+    setTotalPrice:(state)=>{
+      const newPrice = state.products.reduce((a, b)=>{
+        return a + Number(b.userPrice)
+      },0)
+      return {...state, totalPrice: newPrice}
+    },
     add: (state, action) => {
       const product = state.products.find(
         (item) => item.id === action.payload.id
@@ -75,4 +85,4 @@ const cartReducer = createSlice({
 
 export default cartReducer.reducer;
 
-export const { add, toggleProduct, deleteItem } = cartReducer.actions;
+export const { add, toggleProduct, deleteItem, setProductCount, setTotalPrice } = cartReducer.actions;
